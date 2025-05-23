@@ -1,0 +1,16 @@
+{
+    "provides": "directx",
+    "targets": {
+        "windows-x64": {
+            "link-args": [],
+            "dependencies": [],
+            "linked-libraries": [
+                "d3dcompiler_47",
+                "d3d12",
+                "dxgi",
+                "user32",
+                "gdi32"
+            ]
+        }
+    }
+}
