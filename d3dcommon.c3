@@ -168,50 +168,49 @@ struct ShaderMacro
 typedef LPShaderMacro = ShaderMacro*;
 
 // =============================================================================
-// ID3D10Blob
+// IBlob
 // =============================================================================
 
-const ID3D10BLOB_UUID_STRING = "8BA5FB08-5195-40e2-AC58-0D989C3A0102";
-const Win32_GUID ID3D10BLOB_UUID = {
+const IBLOB_UUID_STRING = "8BA5FB08-5195-40e2-AC58-0D989C3A0102";
+const Win32_GUID IBLOB_UUID = {
     0x8ba5fb08, 0x5195, 0x40e2, { 0xac, 0x58, 0xd, 0x98, 0x9c, 0x3a, 0x1, 0x2 } };
 
-struct ID3D10Blob
+struct IBlob
 {
-    ID3D10BlobVTable* vtbl;
+    IBlobVTable* vtbl;
 }
 
-alias IBlob = ID3D10Blob;
 alias LPBlob = IBlob*;
 
-alias ID3D10Blob_GetBufferPointerFn = fn Win32_LPVOID (void* self);
-alias ID3D10Blob_GetBufferSizeFn = fn Win32_SIZE_T (void* self);
+alias IBlob_GetBufferPointerFn = fn Win32_LPVOID (void* self);
+alias IBlob_GetBufferSizeFn = fn Win32_SIZE_T (void* self);
 
-struct ID3D10BlobVTable
+struct IBlobVTable
 {
     inline IUnknownVTable _base;
-    ID3D10Blob_GetBufferPointerFn getBufferPointer;
-    ID3D10Blob_GetBufferSizeFn getBufferSize;
+    IBlob_GetBufferPointerFn getBufferPointer;
+    IBlob_GetBufferSizeFn getBufferSize;
 }
 
 // Functions of IUnknown
 
-fn Win32_HRESULT ID3D10Blob.queryInterface(
+fn Win32_HRESULT IBlob.queryInterface(
     &self,
     Win32_GUID* riid,
     void** ppvObject
 ) @inline =>
     self.vtbl.queryInterface(self, riid, ppvObject);
 
-fn Win32_DWORD ID3D10Blob.addRef(&self) @inline => self.vtbl.addRef(self);
+fn Win32_DWORD IBlob.addRef(&self) @inline => self.vtbl.addRef(self);
 
-fn Win32_DWORD ID3D10Blob.release(&self) @inline => self.vtbl.release(self);
+fn Win32_DWORD IBlob.release(&self) @inline => self.vtbl.release(self);
 
-// Functions of ID3D10Blob
+// Functions of IBlob
 
-fn Win32_LPVOID ID3D10Blob.getBufferPointer(&self) @inline =>
+fn Win32_LPVOID IBlob.getBufferPointer(&self) @inline =>
     self.vtbl.getBufferPointer(self);
 
-fn Win32_SIZE_T ID3D10Blob.getBufferSize(&self) @inline =>
+fn Win32_SIZE_T IBlob.getBufferSize(&self) @inline =>
     self.vtbl.getBufferSize(self);
 
 // ---

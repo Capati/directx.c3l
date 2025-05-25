@@ -9,15 +9,13 @@ const D3DCOMPILER_DLL_A = "d3dcompiler_47.dll";
 
 const COMPILER_VERSION = 47;
 
-alias ID3DBlob = ID3D10Blob;
-
 extern fn Win32_HRESULT readFileToBlob(
     Win32_LPCWSTR pFileName,
-    ID3DBlob** ppContents
+    IBlob** ppContents
 ) @extern("D3DReadFileToBlob");
 
 extern fn Win32_HRESULT writeBlobToFile(
-    ID3DBlob* pBlob,
+    IBlob* pBlob,
     Win32_LPCWSTR pFileName,
     Bool bOverwrite
 ) @extern("D3DWriteBlobToFile");
@@ -80,6 +78,8 @@ bitstruct Flags2 : uint
 
 alias CompileFlags2 = Flags2;
 
+// const STANDARD_FILE_INCLUDE = ((ID3DInclude*)(uptr)1);
+
 extern fn Win32_HRESULT compile (
     Win32_LPCVOID pSrcData,
     Win32_SIZE_T srcDataSize,
@@ -90,8 +90,8 @@ extern fn Win32_HRESULT compile (
     ZString pTarget,
     CompileFlags flags1,
     uint flags2,
-    ID3DBlob** ppCode,
-    ID3DBlob** ppErrorMsgs
+    IBlob** ppCode,
+    IBlob** ppErrorMsgs
 ) @extern("D3DCompile");
 
 alias PCompile = fn Win32_HRESULT (
@@ -104,8 +104,8 @@ alias PCompile = fn Win32_HRESULT (
     ZString pTarget,
     uint flags1,
     uint flags2,
-    ID3DBlob** ppCode,
-    ID3DBlob** ppErrorMsgs);
+    IBlob** ppCode,
+    IBlob** ppErrorMsgs);
 alias PD3DCompile = PCompile;
 
 const SECDATA_MERGE_UAV_SLOTS         = 0x00000001;
@@ -125,8 +125,8 @@ extern fn Win32_HRESULT compile2 (
     uint secondaryDataFlags,
     Win32_LPCVOID pSecondaryData,
     Win32_SIZE_T secondaryDataSize,
-    ID3DBlob** ppCode,
-    ID3DBlob** ppErrorMsgs
+    IBlob** ppCode,
+    IBlob** ppErrorMsgs
 ) @extern("D3DCompile2");
 
 extern fn Win32_HRESULT compileFromFile (
@@ -137,8 +137,8 @@ extern fn Win32_HRESULT compileFromFile (
     ZString pTarget,
     uint flags1,
     uint flags2,
-    ID3DBlob** ppCode,
-    ID3DBlob** ppErrorMsgs
+    IBlob** ppCode,
+    IBlob** ppErrorMsgs
 ) @extern("D3DCompileFromFile");
 
 extern fn Win32_HRESULT preprocess (
@@ -147,8 +147,8 @@ extern fn Win32_HRESULT preprocess (
     ZString pSourceName,
     ShaderMacro* pDefines,
     ID3DInclude* pInclude,
-    ID3DBlob** ppCodeText,
-    ID3DBlob** ppErrorMsgs
+    IBlob** ppCodeText,
+    IBlob** ppErrorMsgs
 ) @extern("Win32_HRESULTD3DPreprocess");
 
 alias PPreprocess = fn Win32_HRESULT (
@@ -157,14 +157,14 @@ alias PPreprocess = fn Win32_HRESULT (
     ZString pFileName,
     ShaderMacro* pDefines,
     ID3DInclude* pInclude,
-    ID3DBlob** ppCodeText,
-    ID3DBlob** ppErrorMsgs);
+    IBlob** ppCodeText,
+    IBlob** ppErrorMsgs);
 alias PD3DPreprocess = PPreprocess;
 
 extern fn Win32_HRESULT getDebugInfo (
     Win32_LPCVOID pSrcData,
     Win32_SIZE_T srcDataSize,
-    ID3DBlob** ppDebugInfo
+    IBlob** ppDebugInfo
 ) @extern("D3DGetDebugInfo");
 
 extern fn Win32_HRESULT reflect (
@@ -195,7 +195,7 @@ extern fn Win32_HRESULT disassemble (
     Win32_SIZE_T srcDataSize,
     uint flags,
     ZString szComments,
-    ID3DBlob** ppDisassembly
+    IBlob** ppDisassembly
 ) @extern("D3DDisassemble");
 
 alias PDisassemble = fn Win32_HRESULT (
@@ -203,7 +203,7 @@ alias PDisassemble = fn Win32_HRESULT (
     Win32_SIZE_T srcDataSize,
     uint flags,
     ZString szComments,
-    ID3DBlob** ppDisassembly);
+    IBlob** ppDisassembly);
 
 alias PD3DDisassemble = PDisassemble;
 
@@ -215,7 +215,7 @@ extern fn Win32_HRESULT disassembleRegion (
     Win32_SIZE_T startByteOffset,
     Win32_SIZE_T numInsts,
     Win32_SIZE_T* pFinishByteOffset,
-    ID3DBlob** ppDisassembly
+    IBlob** ppDisassembly
 ) @extern("D3DDisassembleRegion");
 
 extern fn Win32_HRESULT createLinker(ILinker** ppLinker) @extern("D3DCreateLinker");
@@ -246,19 +246,19 @@ extern fn Win32_HRESULT getTraceInstructionOffsets(
 extern fn Win32_HRESULT getInputSignatureBlob(
     Win32_LPCVOID pSrcData,
     Win32_SIZE_T srcDataSize,
-    ID3DBlob** ppSignatureBlob
+    IBlob** ppSignatureBlob
 ) @extern("D3DGetInputSignatureBlob");
 
 extern fn Win32_HRESULT getOutputSignatureBlob(
     Win32_LPCVOID pSrcData,
     Win32_SIZE_T srcDataSize,
-    ID3DBlob** ppSignatureBlob
+    IBlob** ppSignatureBlob
 ) @extern("D3DGetOutputSignatureBlob");
 
 extern fn Win32_HRESULT getInputAndOutputSignatureBlob(
     Win32_LPCVOID pSrcData,
     Win32_SIZE_T srcDataSize,
-    ID3DBlob** ppSignatureBlob
+    IBlob** ppSignatureBlob
 ) @extern("D3DGetInputAndOutputSignatureBlob");
 
 bitstruct StripFlags : uint
@@ -275,7 +275,7 @@ extern fn Win32_HRESULT stripShader(
     Win32_LPCVOID pShaderBytecode,
     Win32_SIZE_T bytecodeLength,
     StripFlags uStripFlags,
-    ID3DBlob** ppStrippedBlob
+    IBlob** ppStrippedBlob
 ) @extern("D3DStripShader");
 
 enum BlobPart : int (int value)
@@ -304,14 +304,14 @@ extern fn Win32_HRESULT _getBlobPart(
     Win32_SIZE_T srcDataSize,
     int part,
     uint flags,
-    ID3DBlob** ppPart
+    IBlob** ppPart
 ) @local @extern("D3DGetBlobPart");
 fn Win32_HRESULT getBlobPart(
     Win32_LPCVOID pSrcData,
     Win32_SIZE_T srcDataSize,
     BlobPart part,
     uint flags,
-    ID3DBlob** ppPart
+    IBlob** ppPart
 ) @inline =>
     _getBlobPart(pSrcData, srcDataSize, part.value, flags, ppPart);
 
@@ -322,7 +322,7 @@ extern fn Win32_HRESULT _setBlobPart(
     uint flags,
     Win32_LPCVOID pPart,
     Win32_SIZE_T partSize,
-    ID3DBlob** ppNewShader
+    IBlob** ppNewShader
 ) @local @extern("D3DSetBlobPart");
 fn Win32_HRESULT setBlobPart(
     Win32_LPCVOID pSrcData,
@@ -331,13 +331,13 @@ fn Win32_HRESULT setBlobPart(
     uint flags,
     Win32_LPCVOID pPart,
     Win32_SIZE_T partSize,
-    ID3DBlob** ppNewShader
+    IBlob** ppNewShader
 ) @inline =>
     _setBlobPart(pSrcData, srcDataSize, part.value, flags, pPart, partSize, ppNewShader);
 
 extern fn Win32_HRESULT createBlob(
     Win32_SIZE_T size,
-    ID3DBlob** ppBlob
+    IBlob** ppBlob
 ) @extern("D3DCreateBlob");
 
 struct ShaderData
@@ -352,7 +352,7 @@ extern fn Win32_HRESULT compressShaders(
     uint uNumShaders,
     ShaderData* pShaderData,
     uint uFlags,
-    ID3DBlob** ppCompressedData
+    IBlob** ppCompressedData
 ) @extern("D3DCompressShaders");
 
 extern fn Win32_HRESULT decompressShaders(
@@ -362,14 +362,14 @@ extern fn Win32_HRESULT decompressShaders(
     uint uStartIndex,
     uint* pIndices,
     uint uFlags,
-    ID3DBlob** ppShaders,
+    IBlob** ppShaders,
     uint* pTotalShaders
 ) @extern("D3DDecompressShaders");
 
 // extern fn Win32_HRESULT disassemble10Effect(
 //     ID3D10Effect* pEffect,
 //     uint flags,
-//     ID3DBlob** ppDisassembly
+//     IBlob** ppDisassembly
 // ) @extern("D3DDisassemble10Effect");
 
 // =============================================================================
@@ -1479,8 +1479,8 @@ alias ILinker_LinkFn = fn Win32_HRESULT (
     ZString pEntryName,
     ZString pTargetName,
     uint uFlags,
-    ID3DBlob** ppShaderBlob,
-    ID3DBlob** ppErrorBuffer);
+    IBlob** ppShaderBlob,
+    IBlob** ppErrorBuffer);
 
 alias ILinker_UseLibraryFn = fn Win32_HRESULT (
     void* self,
@@ -1520,8 +1520,8 @@ fn Win32_HRESULT ILinker.link(
     ZString pEntryName,
     ZString pTargetName,
     uint uFlags,
-    ID3DBlob** ppShaderBlob,
-    ID3DBlob** ppErrorBuffer
+    IBlob** ppShaderBlob,
+    IBlob** ppErrorBuffer
 ) @inline =>
     (self.vtbl.link(
         self,
@@ -1594,7 +1594,7 @@ struct IFunctionLinkingGraph
 alias IFunctionLinkingGraph_CreateModuleInstanceFn = fn Win32_HRESULT (
     void* self,
     IModuleInstance** ppModuleInstance,
-    ID3DBlob** ppErrorBuffer);
+    IBlob** ppErrorBuffer);
 
 alias IFunctionLinkingGraph_SetInputSignatureFn = fn Win32_HRESULT (
     void* self,
@@ -1633,12 +1633,12 @@ alias IFunctionLinkingGraph_PassValueWithSwizzleFn = fn Win32_HRESULT (
 
 alias IFunctionLinkingGraph_GetLastErrorFn = fn Win32_HRESULT (
     void* self,
-    ID3DBlob** ppErrorBuffer);
+    IBlob** ppErrorBuffer);
 
 alias IFunctionLinkingGraph_GenerateHlslFn = fn Win32_HRESULT (
     void* self,
     uint uFlags,
-    ID3DBlob** ppBuffer);
+    IBlob** ppBuffer);
 
 struct IFunctionLinkingGraphVTable
 {
@@ -1671,7 +1671,7 @@ fn Win32_DWORD IFunctionLinkingGraph.release(&self) @inline => self.vtbl.release
 fn Win32_HRESULT IFunctionLinkingGraph.createModuleInstance(
     &self,
     IModuleInstance** ppModuleInstance,
-    ID3DBlob** ppErrorBuffer
+    IBlob** ppErrorBuffer
 ) @inline =>
     self.vtbl.createModuleInstance(self, ppModuleInstance, ppErrorBuffer);
 
@@ -1736,13 +1736,13 @@ fn Win32_HRESULT IFunctionLinkingGraph.passValueWithSwizzle(
 
 fn Win32_HRESULT IFunctionLinkingGraph.getLastError(
     &self,
-    ID3DBlob** ppErrorBuffer
+    IBlob** ppErrorBuffer
 ) @inline =>
     self.vtbl.getLastError(self, ppErrorBuffer);
 
 fn Win32_HRESULT IFunctionLinkingGraph.generateHlsl(
     &self,
     uint uFlags,
-    ID3DBlob** ppBuffer
+    IBlob** ppBuffer
 ) @inline =>
     self.vtbl.generateHlsl(self, uFlags, ppBuffer);
