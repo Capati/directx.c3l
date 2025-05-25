@@ -5,9 +5,9 @@
             "link-args": [],
             "dependencies": [],
             "linked-libraries": [
-                "d3dcompiler_47",
                 "d3d12",
                 "dxgi",
+                "d3dcompiler_47",
                 "user32",
                 "gdi32"
             ]
