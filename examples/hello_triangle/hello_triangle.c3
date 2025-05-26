@@ -122,7 +122,7 @@ fn int main()
 
             // Try to create a D3D12 device with this adapter - if successful, use this adapter
             if (succeeded(d3d12::createDevice(
-                (dxgi::IUnknown*)(adapter), d3d12::FEATURE_LEVEL_12_0, &dxgi::IDEVICE_UUID, null)))
+                (dxgi::IUnknown*)(adapter), d3dc::FEATURE_LEVEL_12_0, &dxgi::IDEVICE_UUID, null)))
             {
                 break;
             }
@@ -143,7 +143,7 @@ fn int main()
     d3d12::IDevice* device = null;
     fail_if(d3d12::createDevice(
         (dxgi::IUnknown*)(adapter),
-        d3d12::FEATURE_LEVEL_12_0,
+        d3dc::FEATURE_LEVEL_12_0,
         &d3d12::IDEVICE_UUID,
         (void**)&device), "Failed to create device");
     defer device.release();
@@ -309,7 +309,7 @@ fn int main()
         };
 
         desc.desc_1_0.flags = { .allowInputAssemblerInputLayout };  // Allow vertex input
-        d3d12::IBlob* serialized_desc;
+        d3dc::IBlob* serialized_desc;
         defer serialized_desc.release();
         fail_if(d3d12::serializeVersionedRootSignature(&desc, &serialized_desc, null),
             "Failed serializing root signature");
@@ -354,8 +354,8 @@ float4 PSMain(PSInput input) : SV_TARGET {
             compile_flags.skipOptimization = true;  // Skip optimization in debug mode
         $endif
 
-        d3d12::IBlob* vs = null;  // Will hold the compiled vertex shader
-        d3d12::IBlob* ps = null;  // Will hold the compiled pixel shader
+        d3dc::IBlob* vs = null;  // Will hold the compiled vertex shader
+        d3dc::IBlob* ps = null;  // Will hold the compiled pixel shader
 
         // Compile the vertex shader (vs_4_0 profile)
         fail_if(d3dc::compile(

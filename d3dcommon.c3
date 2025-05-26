@@ -1,4 +1,4 @@
-module directx::d3d12;
+module directx::d3dc;
 
 import std::os::win32;
 import std::io;

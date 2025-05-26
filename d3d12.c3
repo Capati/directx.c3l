@@ -2,6 +2,7 @@ module directx::d3d12;
 
 import std::os::win32;
 import directx::dxgi;
+import directx::d3dc;
 
 const INDEX_STRIP_CUT_VALUE_16BIT = ( 0xffff );
 const INDEX_STRIP_CUT_VALUE_32BIT = ( 0xffffffff );
