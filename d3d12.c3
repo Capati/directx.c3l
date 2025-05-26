@@ -461,7 +461,7 @@ const CommandQueuePriority COMMAND_QUEUE_PRIORITY_GLOBAL_REALTIME = 10000;
 struct CommandQueueDesc
 {
     CommandListType type;
-    Win32_INT priority;
+    CommandQueuePriority priority;
     CommandQueueFlags flags;
     uint nodeMask;
 }
