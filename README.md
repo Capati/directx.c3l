@@ -2,6 +2,9 @@
 
 C3 bindings for **Direct3D 12**, **DXGI**, and **D3D Compiler** APIs.
 
+> [!NOTE]
+> The DirectX bindings was created by hand and may require further review and testing.
+
 ## Table of Contents
 
 - [Features](#features)
