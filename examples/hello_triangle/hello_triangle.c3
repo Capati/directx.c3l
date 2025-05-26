@@ -17,25 +17,6 @@ const NUM_RENDERTARGETS = 2;
 // Standard color format for the render target
 const BACK_BUFFER_FORMAT = dxgi::Format.R8G8B8A8_UNORM;
 
-// Main application structure to hold all DirectX 12 objects and state
-struct D3DApp
-{
-    Win32_HINSTANCE instance;                         // Application instance handle
-    Win32_HWND window_handle;                         // Window handle
-    dxgi::IFactory4* dxgi_factory;                    // DXGI factory interface (manages adapter enumeration)
-    dxgi::ISwapChain3* swap_chain;                    // Swap chain for presenting rendered images to the screen
-    d3d12::IDevice* d3d_device;                       // Logical representation of the GPU
-    d3d12::IFence* fence;                             // Synchronization object for GPU-CPU coordination
-    ulong current_fence;                              // Current fence value
-    d3d12::ICommandQueue* command_queue;              // Queue for submitting command lists to the GPU
-    d3d12::ICommandAllocator* direct_cmd_list_alloc;  // Memory allocator for command lists
-    d3d12::IGraphicsCommandList* command_list;        // Command list for recording rendering commands
-    bool paused;                                      // Application paused state
-    bool minimized;                                   // Window minimized state
-    bool maximized;                                   // Window maximized state
-    bool resizing;                                    // Window resizing state
-}
-
 fn int main()
 {
     Win32_WNDCLASSEXW wc = {
