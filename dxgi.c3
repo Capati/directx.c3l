@@ -884,9 +884,24 @@ struct IAdapter
 }
 
 typedef IAdapter1 = inline IAdapter;
+const IADAPTER1_UUID_STRING = "29038f61-3839-4626-91fd-086879011a05";
+const Win32_GUID IADAPTER1_UUID = {
+    0x29038f61, 0x3839, 0x4626, { 0x91, 0xfd, 0x08, 0x68, 0x79, 0x01, 0x1a, 0x05 } };
+
 typedef IAdapter2 = inline IAdapter;
+const IADAPTER2_UUID_STRING = "0AA1AE0A-FA0E-4B84-8644-E05FF8E5ACB5";
+const Win32_GUID IADAPTER2_UUID = {
+    0x0AA1AE0A, 0xFA0E, 0x4B84, { 0x86, 0x44, 0xE0, 0x5F, 0xF8, 0xE5, 0xAC, 0xB5 } };
+
 typedef IAdapter3 = inline IAdapter;
+const IADAPTER3_UUID_STRING = "645967A4-1392-4310-A798-8053CE3E93FD";
+const Win32_GUID IADAPTER3_UUID = {
+    0x645967A4, 0x1392, 0x4310, { 0xA7, 0x98, 0x80, 0x53, 0xCE, 0x3E, 0x93, 0xFD } };
+
 typedef IAdapter4 = inline IAdapter;
+const IADAPTER4_UUID_STRING = "3c8d99d1-4fbf-4181-a82c-af66bf7bd24e";
+const Win32_GUID IADAPTER4_UUID = {
+    0x3c8d99d1, 0x4fbf, 0x4181, { 0xa8, 0x2c, 0xaf, 0x66, 0xbf, 0x7b, 0xd2, 0x4e } };
 
 // Function pointers of IAdapter
 
