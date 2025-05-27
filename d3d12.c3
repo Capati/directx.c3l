@@ -4067,7 +4067,7 @@ struct IPipelineState
 
 alias IPipelineState_GetCachedBlobFn = fn Win32_HRESULT (
     void* self,
-    IBlob* ppBlob);
+    IBlob** ppBlob);
 
 struct IPipelineStateVTable
 {
@@ -4132,7 +4132,7 @@ fn Win32_HRESULT IPipelineState.getDevice(
 
 fn Win32_HRESULT IPipelineState.getCachedBlob(
     &self,
-    IBlob* ppBlob
+    IBlob** ppBlob
 ) @inline =>
     self.vtbl.getCachedBlob(self, ppBlob);
 
